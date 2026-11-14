@@ -1,0 +1,489 @@
+{
+  "$defs": {
+    "CellSelector": {
+      "additionalProperties": false,
+      "properties": {
+        "tags": {
+          "description": "Only cells carrying any of these tags.",
+          "items": {
+            "type": "string"
+          },
+          "title": "Tags",
+          "type": "array"
+        },
+        "ids": {
+          "description": "Only cells with these cell ids.",
+          "items": {
+            "type": "string"
+          },
+          "title": "Ids",
+          "type": "array"
+        },
+        "source_contains": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Only cells whose source contains this text.",
+          "title": "Source Contains"
+        }
+      },
+      "title": "CellSelector",
+      "type": "object"
+    },
+    "DiscoverySpec": {
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "default": true,
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "tolerance": {
+          "$ref": "#/$defs/ToleranceSpec"
+        },
+        "ignore": {
+          "description": "Regular expressions; discovered numbers whose label matches are not reported.",
+          "items": {
+            "type": "string"
+          },
+          "title": "Ignore",
+          "type": "array"
+        },
+        "max_findings": {
+          "default": 1000,
+          "maximum": 100000,
+          "minimum": 1,
+          "title": "Max Findings",
+          "type": "integer"
+        }
+      },
+      "title": "DiscoverySpec",
+      "type": "object"
+    },
+    "EnvironmentSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "default": true,
+          "title": "Enabled",
+          "type": "boolean"
+        },
+        "dependency_files": {
+          "default": true,
+          "title": "Dependency Files",
+          "type": "boolean"
+        },
+        "seeds": {
+          "default": true,
+          "title": "Seeds",
+          "type": "boolean"
+        }
+      },
+      "title": "EnvironmentSpec",
+      "type": "object"
+    },
+    "IgnoreSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "notebook_metadata": {
+          "description": "Top-level notebook metadata keys to ignore.",
+          "items": {
+            "type": "string"
+          },
+          "title": "Notebook Metadata",
+          "type": "array"
+        },
+        "cell_metadata": {
+          "description": "Cell metadata keys to ignore.",
+          "items": {
+            "type": "string"
+          },
+          "title": "Cell Metadata",
+          "type": "array"
+        }
+      },
+      "title": "IgnoreSpec",
+      "type": "object"
+    },
+    "JsonPathExtraction": {
+      "additionalProperties": false,
+      "properties": {
+        "occurrence": {
+          "anyOf": [
+            {
+              "enum": [
+                "first",
+                "last",
+                "only"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ],
+          "default": "last",
+          "description": "Which match to use when several are found: first, last, only (error if several different values), or a 1-based index (negative counts from the end).",
+          "title": "Occurrence"
+        },
+        "cells": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CellSelector"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "streams": {
+          "items": {
+            "enum": [
+              "stdout",
+              "stderr",
+              "result"
+            ],
+            "type": "string"
+          },
+          "title": "Streams",
+          "type": "array"
+        },
+        "type": {
+          "const": "json_path",
+          "title": "Type",
+          "type": "string"
+        },
+        "path": {
+          "description": "e.g. metrics.val_accuracy or $.runs[0].loss",
+          "maxLength": 500,
+          "minLength": 1,
+          "title": "Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "path"
+      ],
+      "title": "JsonPathExtraction",
+      "type": "object"
+    },
+    "KeyValueExtraction": {
+      "additionalProperties": false,
+      "properties": {
+        "occurrence": {
+          "anyOf": [
+            {
+              "enum": [
+                "first",
+                "last",
+                "only"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ],
+          "default": "last",
+          "description": "Which match to use when several are found: first, last, only (error if several different values), or a 1-based index (negative counts from the end).",
+          "title": "Occurrence"
+        },
+        "cells": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CellSelector"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "streams": {
+          "items": {
+            "enum": [
+              "stdout",
+              "stderr",
+              "result"
+            ],
+            "type": "string"
+          },
+          "title": "Streams",
+          "type": "array"
+        },
+        "type": {
+          "const": "key_value",
+          "title": "Type",
+          "type": "string"
+        },
+        "key": {
+          "description": "Text printed before the number.",
+          "maxLength": 200,
+          "minLength": 1,
+          "title": "Key",
+          "type": "string"
+        },
+        "ignore_case": {
+          "default": true,
+          "title": "Ignore Case",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "type",
+        "key"
+      ],
+      "title": "KeyValueExtraction",
+      "type": "object"
+    },
+    "MetricSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "pattern": "^[A-Za-z][A-Za-z0-9_.\\-]{0,63}$",
+          "title": "Name",
+          "type": "string"
+        },
+        "label": {
+          "anyOf": [
+            {
+              "maxLength": 120,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Label"
+        },
+        "description": {
+          "anyOf": [
+            {
+              "maxLength": 500,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Description"
+        },
+        "direction": {
+          "default": "none",
+          "enum": [
+            "minimize",
+            "maximize",
+            "none"
+          ],
+          "title": "Direction",
+          "type": "string"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "maxLength": 24,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Display unit. 'fraction' shows values in [0,1] as percentages and differences in percentage points; 'percent' marks values that are already percentages.",
+          "title": "Unit"
+        },
+        "extraction": {
+          "discriminator": {
+            "mapping": {
+              "json_path": "#/$defs/JsonPathExtraction",
+              "key_value": "#/$defs/KeyValueExtraction",
+              "regex": "#/$defs/RegexExtraction"
+            },
+            "propertyName": "type"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/RegexExtraction"
+            },
+            {
+              "$ref": "#/$defs/KeyValueExtraction"
+            },
+            {
+              "$ref": "#/$defs/JsonPathExtraction"
+            }
+          ],
+          "title": "Extraction"
+        },
+        "tolerance": {
+          "$ref": "#/$defs/ToleranceSpec"
+        },
+        "required": {
+          "default": true,
+          "description": "Report the metric as missing when it cannot be found.",
+          "title": "Required",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "extraction"
+      ],
+      "title": "MetricSpec",
+      "type": "object"
+    },
+    "PolicySpec": {
+      "additionalProperties": false,
+      "properties": {
+        "fail_on": {
+          "items": {
+            "enum": [
+              "regression",
+              "output_missing",
+              "incomparable",
+              "changed",
+              "new_error",
+              "reproducibility_warning",
+              "structural"
+            ],
+            "type": "string"
+          },
+          "title": "Fail On",
+          "type": "array"
+        }
+      },
+      "title": "PolicySpec",
+      "type": "object"
+    },
+    "RegexExtraction": {
+      "additionalProperties": false,
+      "properties": {
+        "occurrence": {
+          "anyOf": [
+            {
+              "enum": [
+                "first",
+                "last",
+                "only"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "integer"
+            }
+          ],
+          "default": "last",
+          "description": "Which match to use when several are found: first, last, only (error if several different values), or a 1-based index (negative counts from the end).",
+          "title": "Occurrence"
+        },
+        "cells": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/CellSelector"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "streams": {
+          "items": {
+            "enum": [
+              "stdout",
+              "stderr",
+              "result"
+            ],
+            "type": "string"
+          },
+          "title": "Streams",
+          "type": "array"
+        },
+        "type": {
+          "const": "regex",
+          "title": "Type",
+          "type": "string"
+        },
+        "pattern": {
+          "maxLength": 1000,
+          "minLength": 1,
+          "title": "Pattern",
+          "type": "string"
+        },
+        "ignore_case": {
+          "default": false,
+          "title": "Ignore Case",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "type",
+        "pattern"
+      ],
+      "title": "RegexExtraction",
+      "type": "object"
+    },
+    "ToleranceSpec": {
+      "additionalProperties": false,
+      "properties": {
+        "absolute": {
+          "default": 0.0,
+          "description": "Allowed absolute change |candidate - baseline|.",
+          "minimum": 0,
+          "title": "Absolute",
+          "type": "number"
+        },
+        "relative": {
+          "default": 0.0,
+          "description": "Allowed change as a fraction of |baseline| (0.02 = 2%).",
+          "minimum": 0,
+          "title": "Relative",
+          "type": "number"
+        }
+      },
+      "title": "ToleranceSpec",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "const": 1,
+      "default": 1,
+      "title": "Version",
+      "type": "integer"
+    },
+    "metrics": {
+      "items": {
+        "$ref": "#/$defs/MetricSpec"
+      },
+      "title": "Metrics",
+      "type": "array"
+    },
+    "discovery": {
+      "$ref": "#/$defs/DiscoverySpec"
+    },
+    "environment": {
+      "$ref": "#/$defs/EnvironmentSpec"
+    },
+    "policy": {
+      "$ref": "#/$defs/PolicySpec"
+    },
+    "ignore": {
+      "$ref": "#/$defs/IgnoreSpec"
+    }
+  },
+  "title": "NoteDeltaConfig",
+  "type": "object",
+  "$id": "https://notedelta.dev/schema/config-v1.json"
+}

@@ -1,0 +1,21 @@
+name: Feature request
+description: Suggest an improvement or a new capability
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to check or review?
+      description: Describe the scientific workflow, e.g. which results you compare by hand today.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What would help?
+  - type: textarea
+    id: example
+    attributes:
+      label: Example output (optional)
+      description: A short excerpt of the notebook output you would like NoteDelta to understand
+      render: text

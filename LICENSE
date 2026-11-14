@@ -1,0 +1,43 @@
+NoteDelta End User License Agreement
+Version 1.0 (draft for the 0.1 beta)
+
+Copyright (c) 2026 Ouyang Matters. All rights reserved.
+
+This agreement covers the NoteDelta command-line tool and Python package, the NoteDelta
+extension for Visual Studio Code, the NoteDelta GitHub Actions integration and their
+documentation (together, the "Software").
+
+1. Licence grant. You may install and use the Software, free of charge, on any number
+   of computers, for personal, academic, research and commercial purposes, including
+   in continuous-integration systems that you or your organisation operate.
+
+2. Restrictions. You may not (a) sell, rent or sublicense the Software, (b) distribute
+   modified copies of the Software, or (c) remove or alter copyright or licence notices.
+   You may redistribute unmodified copies of the Software, including this agreement,
+   for example as part of an internal mirror or a container image.
+
+3. Your data. The Software processes your notebooks and project files locally. It
+   does not collect telemetry and does not transmit your notebooks, results or source
+   code anywhere. Reports it writes stay where you put them.
+
+4. Future editions. Some future features may be offered under a separate paid
+   licence. Features available free of charge in a released version will not be
+   removed from that version, and the Software contains no hidden time limits or
+   disabling mechanisms.
+
+5. Third-party components. The Software depends on open-source packages that are
+   licensed under their own terms (see THIRD_PARTY_NOTICES.md). Nothing in this
+   agreement limits your rights under those licences.
+
+6. No warranty. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. NoteDelta
+   reports observable differences between notebooks according to documented rules;
+   it does not determine whether results are scientifically valid or reproducible.
+
+7. Limitation of liability. TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL
+   THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR ITS USE.
+
+8. Termination. This licence ends automatically if you breach it. Sections 6 and 7
+   survive termination.

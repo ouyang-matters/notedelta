@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src data:; form-action 'none'; base-uri 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="generator" content="NoteDelta 0.1.0">
+<title>NoteDelta · baseline.ipynb → candidate.ipynb</title>
+<style>
+:root{
+  --bg:#f7f7f5; --panel:#ffffff; --panel-2:#f2f2ef; --ink:#1c1e21; --muted:#5d646d; --faint:#8b929a;
+  --line:#e4e4e0; --line-2:#d4d4cf; --accent:#2f5bd3; --code:#24292f;
+  --bad:#b3261e; --bad-bg:#fbe9e7; --good:#11703f; --good-bg:#e4f4ea; --warn:#8a5a00; --warn-bg:#fdf1d6;
+  --calm:#59636e; --calm-bg:#eef0f2; --odd:#6b3fc0; --odd-bg:#efe9fb; --add-bg:#e6f4ea; --del-bg:#fbeaea;
+  --add-ink:#11592f; --del-ink:#8c1d18; --hunk:#6a7787;
+  --sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", "Cascadia Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){ :root:not(:has(#theme-light:checked)){ 
+  --bg:#111315; --panel:#171a1d; --panel-2:#1d2125; --ink:#e7e9ec; --muted:#9aa3ad; --faint:#6b747e;
+  --line:#2a2f35; --line-2:#353b42; --accent:#8ab4ff; --code:#d6dae0;
+  --bad:#ff8a80; --bad-bg:#3a1d1c; --good:#6fdc9c; --good-bg:#16301f; --warn:#f3c35b; --warn-bg:#33290f;
+  --calm:#aab4bf; --calm-bg:#22272c; --odd:#c9a7ff; --odd-bg:#2a2140; --add-bg:#15301f; --del-bg:#3a1d1f;
+  --add-ink:#8ee4ae; --del-ink:#ffa198; --hunk:#7d8fa3;
+ color-scheme: dark; } }
+:root:has(#theme-dark:checked){ 
+  --bg:#111315; --panel:#171a1d; --panel-2:#1d2125; --ink:#e7e9ec; --muted:#9aa3ad; --faint:#6b747e;
+  --line:#2a2f35; --line-2:#353b42; --accent:#8ab4ff; --code:#d6dae0;
+  --bad:#ff8a80; --bad-bg:#3a1d1c; --good:#6fdc9c; --good-bg:#16301f; --warn:#f3c35b; --warn-bg:#33290f;
+  --calm:#aab4bf; --calm-bg:#22272c; --odd:#c9a7ff; --odd-bg:#2a2140; --add-bg:#15301f; --del-bg:#3a1d1f;
+  --add-ink:#8ee4ae; --del-ink:#ffa198; --hunk:#7d8fa3;
+ color-scheme: dark; }
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.5 var(--sans);font-feature-settings:"tnum" 1}
+.theme-input{position:absolute;opacity:0;pointer-events:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+header.top{border-bottom:1px solid var(--line);background:var(--panel)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;height:48px;gap:16px}
+.brand{font-weight:650;letter-spacing:.01em;display:flex;align-items:center;gap:10px}
+.brand .mark{width:18px;height:18px;border-radius:4px;background:linear-gradient(135deg,var(--accent),var(--good));display:inline-block}
+.brand small{color:var(--faint);font-weight:500}
+.theme{display:flex;border:1px solid var(--line-2);border-radius:7px;overflow:hidden;font-size:12px}
+.theme label{padding:3px 10px;cursor:pointer;color:var(--muted)}
+.theme label+label{border-left:1px solid var(--line-2)}
+:root:has(#theme-auto:checked) label[for=theme-auto],:root:has(#theme-light:checked) label[for=theme-light],
+:root:has(#theme-dark:checked) label[for=theme-dark]{background:var(--panel-2);color:var(--ink)}
+.theme-input:focus-visible + .x{outline:none}
+h1{font-size:20px;line-height:1.3;margin:28px 0 4px;font-weight:650;word-break:break-word}
+h1 .arrow{color:var(--faint);font-weight:400;margin:0 6px}
+h2{font-size:15px;margin:0;font-weight:650}
+.meta{color:var(--muted);font-size:12.5px;margin:0 0 18px}
+.meta span+span::before{content:"·";margin:0 7px;color:var(--faint)}
+.verdict{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--panel);margin-bottom:14px}
+.verdict .badge{font-weight:700;font-size:12px;padding:2px 8px;border-radius:5px;white-space:nowrap}
+.verdict.fail{border-color:color-mix(in srgb,var(--bad) 40%,var(--line))}.verdict.fail .badge{background:var(--bad-bg);color:var(--bad)}
+.verdict.pass .badge{background:var(--good-bg);color:var(--good)}.verdict.info .badge{background:var(--calm-bg);color:var(--calm)}
+.verdict p{margin:0}.verdict .why{color:var(--muted);font-size:13px}
+.tiles{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-bottom:8px}
+.tile{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.tile .n{font-size:22px;font-weight:650;line-height:1.2}
+.tile .l{color:var(--muted);font-size:12px}
+.tile.bad .n{color:var(--bad)}.tile.good .n{color:var(--good)}.tile.warn .n{color:var(--warn)}.tile.odd .n{color:var(--odd)}
+nav.toc{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:13px;margin:18px 0 6px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+nav.toc a{color:var(--muted);text-decoration:none}nav.toc a:hover{color:var(--accent)}
+nav.toc .c{color:var(--faint);margin-left:3px}
+section.block{margin:22px 0}
+.block-h{display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
+.block-h .sub{color:var(--muted);font-size:12.5px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.scroll{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th{font-weight:600;color:var(--muted);text-align:left;font-size:12px;background:var(--panel-2);border-bottom:1px solid var(--line);padding:7px 10px;white-space:nowrap}
+td{padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td.num{text-align:right;font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+th.num{text-align:right}
+td.lbl{max-width:340px;word-break:break-word}
+td .small,.small{color:var(--muted);font-size:12px}
+tr.explain td{padding-top:0;color:var(--muted);font-size:12.5px;border-bottom:1px solid var(--line)}
+tr.has-explain td{border-bottom:0}
+.chip{display:inline-flex;align-items:center;gap:5px;padding:1px 8px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.chip.bad{background:var(--bad-bg);color:var(--bad)}.chip.good{background:var(--good-bg);color:var(--good)}
+.chip.warn{background:var(--warn-bg);color:var(--warn)}.chip.calm{background:var(--calm-bg);color:var(--calm)}
+.chip.odd{background:var(--odd-bg);color:var(--odd)}
+.lvl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:1px 7px;border-radius:4px;white-space:nowrap}
+.lvl.fact{background:var(--calm-bg);color:var(--calm)}.lvl.warning{background:var(--warn-bg);color:var(--warn)}
+.lvl.hypothesis{background:var(--odd-bg);color:var(--odd)}
+code,.mono{font-family:var(--mono);font-size:12.5px}
+details.cell{border-bottom:1px solid var(--line)}details.cell:last-child{border-bottom:0}
+details.cell>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:92px 74px 1fr auto;gap:10px;align-items:center;padding:9px 12px}
+details.cell>summary::-webkit-details-marker{display:none}
+details.cell>summary:hover{background:var(--panel-2)}
+details.cell[open]>summary{background:var(--panel-2);border-bottom:1px solid var(--line)}
+.ref{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.ctype{font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--faint)}
+.ttl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--mono);font-size:12.5px}
+.tags{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
+.tag{font-size:11px;padding:1px 6px;border-radius:4px;background:var(--calm-bg);color:var(--calm);white-space:nowrap}
+.tag.add{background:var(--good-bg);color:var(--good)}.tag.del{background:var(--bad-bg);color:var(--bad)}
+.tag.amb{background:var(--odd-bg);color:var(--odd)}.tag.err{background:var(--bad-bg);color:var(--bad)}
+.cell-body{padding:12px 14px 14px;display:grid;gap:12px}
+.cell-body h4{margin:0 0 6px;font-size:12px;color:var(--muted);font-weight:600}
+.note{font-size:12.5px;color:var(--odd);background:var(--odd-bg);padding:6px 10px;border-radius:6px}
+pre.diff{margin:0;font:12px/1.45 var(--mono);background:var(--panel-2);border:1px solid var(--line);border-radius:7px;overflow:auto;max-height:420px;padding:6px 0;color:var(--code)}
+pre.diff span{display:block;padding:0 12px;white-space:pre}
+pre.diff .a{background:var(--add-bg);color:var(--add-ink)}pre.diff .d{background:var(--del-bg);color:var(--del-ink)}
+pre.diff .h{color:var(--hunk)}
+.out{border:1px solid var(--line);border-radius:8px;padding:8px 10px;display:grid;gap:6px}
+.out .head{display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:12.5px}
+.imgs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.imgs figure{margin:0;border:1px solid var(--line);border-radius:6px;padding:6px;background:#fff}
+.imgs img{max-width:100%;height:auto;display:block;margin:0 auto}
+.imgs figcaption{font-size:11px;color:#5d646d;text-align:center}
+.env-group{display:grid;gap:0}
+.env{display:grid;grid-template-columns:96px 1fr;gap:12px;padding:10px 12px;border-bottom:1px solid var(--line)}
+.env:last-child{border-bottom:0}
+.env .vals{font-family:var(--mono);font-size:12px;color:var(--muted);margin-top:3px;word-break:break-word}
+.env .ev{font-size:12px;color:var(--faint);margin-top:2px}
+.empty{padding:14px;color:var(--muted);font-size:13px}
+ul.plain{margin:0;padding:0 0 0 18px}ul.plain li{margin:3px 0}
+.diag{padding:12px 14px;display:grid;gap:10px}
+.diag .item{border-left:3px solid var(--line-2);padding-left:10px}
+.diag .item.bad{border-color:var(--bad)}.diag .item.warn{border-color:var(--warn)}.diag .item.odd{border-color:var(--odd)}
+.diag .rule{font-family:var(--mono);font-size:11px;color:var(--faint)}
+details.more>summary{cursor:pointer;color:var(--muted);font-size:13px;padding:8px 12px}
+footer{color:var(--faint);font-size:12px;border-top:1px solid var(--line);margin-top:30px;padding:16px 0 40px}
+a{color:var(--accent)}
+@media (max-width:860px){.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}details.cell>summary{grid-template-columns:70px 1fr}
+ details.cell>summary .ctype,details.cell>summary .tags{display:none}.imgs{grid-template-columns:1fr}.wrap{padding:0 16px}
+ .env{grid-template-columns:1fr;gap:4px}}
+@media print{.theme,nav.toc{display:none}details.cell{break-inside:avoid}}
+</style>
+</head>
+<body>
+<input class="theme-input" type="radio" name="theme" id="theme-auto" checked aria-label="Automatic theme">
+<input class="theme-input" type="radio" name="theme" id="theme-light" aria-label="Light theme">
+<input class="theme-input" type="radio" name="theme" id="theme-dark" aria-label="Dark theme">
+<header class="top"><div class="wrap"><div class="brand"><span class="mark" aria-hidden="true"></span>NoteDelta <small>notebook review</small></div>
+<div class="theme" role="group" aria-label="Theme"><label for="theme-auto">Auto</label><label for="theme-light">Light</label><label for="theme-dark">Dark</label></div></div></header>
+<main class="wrap">
+<h1>baseline.ipynb<span class="arrow">→</span>candidate.ipynb</h1>
+<p class="meta"><span>Generated 2026-11-14 19:35:32 UTC</span><span>config .notedelta.yml</span><span>NoteDelta 0.1.0</span><span>schema 1.0</span><span>kernel python3 → python3</span></p>
+<div class="verdict fail"><span class="badge">FAIL</span><div><p><strong>1 regression, 2 numerical changes</strong></p><p class="why">1 metric regression(s): reconstruction_error</p></div></div>
+<div class="tiles"><div class="tile "><div class="n">6</div><div class="l">Changed cells</div></div><div class="tile warn"><div class="n">2</div><div class="l">Numerical changes</div></div><div class="tile bad"><div class="n">1</div><div class="l">Regressions</div></div><div class="tile "><div class="n">0</div><div class="l">Improvements</div></div><div class="tile "><div class="n">0</div><div class="l">Missing / incomparable</div></div><div class="tile warn"><div class="n">1</div><div class="l">Reproducibility warnings</div></div></div>
+<nav class="toc" aria-label="Sections"><a href="#metrics">Scientific metrics<span class="c">3</span></a><a href="#numeric">Numerical changes<span class="c">2</span></a><a href="#cells">Notebook changes<span class="c">6</span></a><a href="#environment">Environment<span class="c">1</span></a><a href="#diagnostics">Diagnostics</a></nav>
+<section class="block" id="metrics"><div class="block-h"><h2>Scientific metrics</h2><span class="sub">configured in .notedelta.yml</span></div><div class="panel scroll"><table><thead><tr><th>Metric</th><th class="num">Baseline</th><th class="num">Candidate</th><th class="num">Difference</th><th class="num">Tolerance</th><th>Status</th></tr></thead><tbody><tr class="has-explain"><td class="lbl"><strong>Relative reconstruction error</strong><div class="small mono">reconstruction_error · lower is better</div></td><td class="num">0.0073<div class="small">cell #4</div></td><td class="num">0.0091<div class="small">cell #4</div></td><td class="num">+0.0018 (+24.66%)</td><td class="num">±0.0001 or ±2%</td><td><span class="chip bad"><span aria-hidden="true">▼</span> Regression</span></td></tr><tr class="explain"><td colspan="6">Relative reconstruction error increased by 0.0018 (+24.66%) (0.0073 → 0.0091), exceeding the configured tolerance (absolute 0.0001 or relative 2% of |baseline|; allowed change 0.000146). The metric is declared &#x27;minimize&#x27; (lower is better), so this is a regression.</td></tr><tr class="has-explain"><td class="lbl"><strong>Total energy</strong><div class="small mono">energy · no direction</div></td><td class="num">12.48331<div class="small">cell #5</div></td><td class="num">12.48329<div class="small">cell #5</div></td><td class="num">-0.00002 (-0.00016%)</td><td class="num">±0.001%</td><td><span class="chip calm"><span aria-hidden="true">≈</span> Within tolerance</span></td></tr><tr class="explain"><td colspan="6">Total energy decreased by 0.00002 (-0.00016%) (12.48331 → 12.48329), within the configured tolerance (relative 0.001% of |baseline|; allowed change 0.0001248331).</td></tr><tr class="has-explain"><td class="lbl"><strong>Energy drift</strong><div class="small mono">energy_drift · lower is better</div></td><td class="num">1.20e-06<div class="small">cell #7</div></td><td class="num">1.21e-06<div class="small">cell #7</div></td><td class="num">+1e-8 (+0.83%)</td><td class="num">±5%</td><td><span class="chip calm"><span aria-hidden="true">≈</span> Within tolerance</span></td></tr><tr class="explain"><td colspan="6">Energy drift increased by 1e-8 (+0.83%) (1.20e-06 → 1.21e-06), within the configured tolerance (relative 5% of |baseline|; allowed change 6e-8).</td></tr></tbody></table></div></section>
+<section class="block" id="numeric"><div class="block-h"><h2>Numerical changes</h2><span class="sub">discovered automatically in changed outputs · 14 values compared · no declared direction</span></div><div class="panel scroll"><table><thead><tr><th>ID</th><th class="num">Cell</th><th>Value</th><th class="num">Baseline</th><th class="num">Candidate</th><th class="num">Difference</th><th>Status</th></tr></thead><tbody><tr><td class="mono small">N1</td><td class="num">#3<div class="small">line 2</div></td><td class="lbl">Max residual<div class="small">text</div></td><td class="num">3.2e-08</td><td class="num">4.1e-08</td><td class="num">+9e-9 (+28.12%)</td><td title="Max residual increased by 9e-9 (+28.12%) (3.2e-08 → 4.1e-08), exceeding the discovery tolerance (absolute 1e-12 or relative 1e-07% of |baseline|; allowed change 1e-12). Automatically discovered numbers have no declared direction, so this is a numerical change, not necessarily a regression."><span class="chip warn"><span aria-hidden="true">Δ</span> Changed</span></td></tr><tr><td class="mono small">N2</td><td class="num">#6</td><td class="lbl">Out[6]: u[N // 2, ::16]<div class="small">literal</div></td><td class="num">array (8,)</td><td class="num">array (8,)</td><td class="num">max |Δ| 4.843e-05; 7/8 changed</td><td title="Out[6]: u[N // 2, ::16], shape (8,): 7 of 8 elements changed; max |difference| 4.843e-05 at index [4]; relative L2 error 5.903e-05; 7 element(s) exceed the tolerance (absolute 1e-12 or relative 1e-07% of |baseline|)."><span class="chip warn"><span aria-hidden="true">Δ</span> Changed</span></td></tr></tbody></table></div></section>
+<section class="block" id="cells"><div class="block-h"><h2>Notebook changes</h2><span class="sub">+0 added · −0 deleted · 6 modified · 0 moved · 0 re-executed only</span></div><div class="panel"><details class="cell" id="cell-2"><summary><span class="ref">#2 → #2</span><span class="ctype">code</span><span class="ttl">N = 128</span><span class="tags"><span class="tag">source</span></span></summary><div class="cell-body"><div><h4>Source</h4><pre class="diff"><span class="h">@@ -1,4 +1,4 @@</span><span> N = 128</span><span> DT = 1e-4</span><span class="d">-RANK = 12</span><span class="a">+RANK = 10</span><span> u0 = initial_condition(N)</span></pre></div></div></details><details class="cell" id="cell-3"><summary><span class="ref">#3 → #3</span><span class="ctype">code</span><span class="ttl">u, info = solve_heat(u0, dt=DT, steps=4000)</span><span class="tags"><span class="tag">outputs</span></span></summary><div class="cell-body"><div><h4>Outputs</h4><div class="out"><div class="head"><span class="tag">changed</span><strong>stdout</strong><span class="small">stdout text changed</span></div><pre class="diff"><span class="h">@@ -1,3 +1,3 @@</span><span> Converged after 1840 iterations</span><span class="d">-Max residual = 3.2e-08</span><span class="a">+Max residual = 4.1e-08</span><span> </span></pre></div></div></div></details><details class="cell" id="cell-4"><summary><span class="ref">#4 → #4</span><span class="ctype">code</span><span class="ttl">u_r = reconstruct(u, rank=RANK)</span><span class="tags"><span class="tag">outputs</span></span></summary><div class="cell-body"><div><h4>Outputs</h4><div class="out"><div class="head"><span class="tag">changed</span><strong>stdout</strong><span class="small">stdout text changed</span></div><pre class="diff"><span class="h">@@ -1,2 +1,2 @@</span><span class="d">-Relative reconstruction error = 0.0073</span><span class="a">+Relative reconstruction error = 0.0091</span><span> </span></pre></div></div></div></details><details class="cell" id="cell-5"><summary><span class="ref">#5 → #5</span><span class="ctype">code</span><span class="ttl">{&#x27;energy&#x27;: total_energy(u), &#x27;mass&#x27;: total_mass(u)}</span><span class="tags"><span class="tag">outputs</span></span></summary><div class="cell-body"><div><h4>Outputs</h4><div class="out"><div class="head"><span class="tag">changed</span><strong>result</strong><span class="small">result text changed</span></div><pre class="diff"><span class="h">@@ -1 +1 @@</span><span class="d">-{&#x27;energy&#x27;: 12.48331, &#x27;mass&#x27;: 1.0}</span><span class="a">+{&#x27;energy&#x27;: 12.48329, &#x27;mass&#x27;: 1.0}</span></pre></div></div></div></details><details class="cell" id="cell-6"><summary><span class="ref">#6 → #6</span><span class="ctype">code</span><span class="ttl">u[N // 2, ::16]</span><span class="tags"><span class="tag">outputs</span></span></summary><div class="cell-body"><div><h4>Outputs</h4><div class="out"><div class="head"><span class="tag">changed</span><strong>result</strong><span class="small">result text changed</span></div><pre class="diff"><span class="h">@@ -1,2 +1,2 @@</span><span class="d">-array([0.        , 0.18364583, 0.35215718, 0.49230146, 0.58979253,</span><span class="d">-       0.63542881, 0.62711702, 0.57024469])</span><span class="a">+array([0.        , 0.18366011, 0.35217901, 0.49229004, 0.58974410,</span><span class="a">+       0.63540126, 0.62715519, 0.57021087])</span></pre></div></div></div></details><details class="cell" id="cell-7"><summary><span class="ref">#7 → #7</span><span class="ctype">code</span><span class="ttl">print(f&#x27;Energy drift = {energy}&#x27;)</span><span class="tags"><span class="tag">outputs</span></span></summary><div class="cell-body"><div><h4>Outputs</h4><div class="out"><div class="head"><span class="tag">changed</span><strong>stdout</strong><span class="small">stdout text changed</span></div><pre class="diff"><span class="h">@@ -1,2 +1,2 @@</span><span class="d">-Energy drift = 1.20e-06</span><span class="a">+Energy drift = 1.21e-06</span><span> </span></pre></div></div></div></details></div></section>
+<section class="block" id="environment"><div class="block-h"><h2>Environment &amp; reproducibility</h2><span class="sub">facts are observed; hypotheses are not verified</span></div><div class="panel env-group"><div class="env"><div><span class="lvl warning">warning</span></div><div>No dependency declaration or lockfile was found for the candidate notebook; the package environment cannot be described or reproduced from the project files.<div class="ev">Evidence: searched the notebook folder and its parents up to the repository root</div></div></div></div></section>
+<section class="block" id="diagnostics"><div class="block-h"><h2>Detailed diagnostics</h2><span class="sub">why each result was classified the way it was</span></div><div class="panel diag"><div class="item bad"><div><strong>Relative reconstruction error</strong> <span class="chip bad"><span aria-hidden="true">▼</span> Regression</span> <span class="rule">R-DIRECTION</span></div><div>Relative reconstruction error increased by 0.0018 (+24.66%) (0.0073 → 0.0091), exceeding the configured tolerance (absolute 0.0001 or relative 2% of |baseline|; allowed change 0.000146). The metric is declared &#x27;minimize&#x27; (lower is better), so this is a regression.</div><div class="small mono">baseline · cell #4, line 1: Relative reconstruction error = 0.0073</div><div class="small mono">candidate · cell #4, line 1: Relative reconstruction error = 0.0091</div></div><div class="item "><div><strong>Total energy</strong> <span class="chip calm"><span aria-hidden="true">≈</span> Within tolerance</span> <span class="rule">R-TOLERANCE</span></div><div>Total energy decreased by 0.00002 (-0.00016%) (12.48331 → 12.48329), within the configured tolerance (relative 0.001% of |baseline|; allowed change 0.0001248331).</div><div class="small mono">baseline · cell #5: energy = 12.48331</div><div class="small mono">candidate · cell #5: energy = 12.48329</div></div><div class="item "><div><strong>Energy drift</strong> <span class="chip calm"><span aria-hidden="true">≈</span> Within tolerance</span> <span class="rule">R-TOLERANCE</span></div><div>Energy drift increased by 1e-8 (+0.83%) (1.20e-06 → 1.21e-06), within the configured tolerance (relative 5% of |baseline|; allowed change 6e-8).</div><div class="small mono">baseline · cell #7, line 1: Energy drift = 1.20e-06</div><div class="small mono">candidate · cell #7, line 1: Energy drift = 1.21e-06</div><div class="small">the difference is within the printed precision (±5e-9 / ±5e-9); if the values were rounded for display, the underlying values may be equal</div></div><div class="item warn"><div><span class="mono small">N1</span> <strong>Max residual</strong> <span class="small">cell #3</span> <span class="rule">R-CHANGED</span></div><div>Max residual increased by 9e-9 (+28.12%) (3.2e-08 → 4.1e-08), exceeding the discovery tolerance (absolute 1e-12 or relative 1e-07% of |baseline|; allowed change 1e-12). Automatically discovered numbers have no declared direction, so this is a numerical change, not necessarily a regression.</div></div><div class="item warn"><div><span class="mono small">N2</span> <strong>Out[6]: u[N // 2, ::16]</strong> <span class="small">cell #6</span> <span class="rule">R-CHANGED</span></div><div>Out[6]: u[N // 2, ::16], shape (8,): 7 of 8 elements changed; max |difference| 4.843e-05 at index [4]; relative L2 error 5.903e-05; 7 element(s) exceed the tolerance (absolute 1e-12 or relative 1e-07% of |baseline|).</div><div class="small mono">mean |Δ| 2.444e-05 · RMS Δ 2.854e-05 · rel. L2 5.903e-05 · 7 element(s) beyond tolerance</div></div><div class="item"><strong>How to read this report</strong><ul class="plain"><li><em>Difference</em> is candidate − baseline, computed exactly on the printed decimal values. Relative change uses |baseline| and is undefined when the baseline is zero.</li><li>A change is <em>within tolerance</em> when |difference| ≤ max(absolute, relative × |baseline|).</li><li>Only configured metrics with a declared direction can be a <em>regression</em> or <em>improvement</em>; automatically discovered numbers are reported as numerical changes.</li><li>Environment findings are labelled <em>fact</em> (observed), <em>warning</em> (observed risk) or <em>hypothesis</em> (possible explanation, not verified).</li><li>Images are compared by content hash only; their scientific meaning is not interpreted.</li></ul></div></div></section>
+<footer>NoteDelta reports observable differences between two notebooks and applies the rules you configured. It does not determine whether an experiment is scientifically valid or reproducible; interpretation remains the researcher&#x27;s responsibility. Generated offline; this page contains no scripts and loads no external resources.</footer>
+</main>
+</body>
+</html>

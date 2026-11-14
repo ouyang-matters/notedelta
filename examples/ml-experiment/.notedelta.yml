@@ -1,0 +1,21 @@
+version: 1
+metrics:
+  - name: validation_accuracy
+    label: Validation accuracy
+    direction: maximize
+    unit: fraction
+    extraction:
+      type: key_value
+      key: Validation accuracy
+    tolerance:
+      absolute: 0.002
+  - name: validation_loss
+    label: Validation loss
+    direction: minimize
+    extraction:
+      type: key_value
+      key: Validation loss
+    tolerance:
+      relative: 0.02
+policy:
+  fail_on: []

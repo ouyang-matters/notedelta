@@ -1,0 +1,241 @@
+{
+  "schema_version": "1.0",
+  "tool": {
+    "name": "notedelta",
+    "version": "0.1.0"
+  },
+  "generated_at": "2026-11-14T19:35:34Z",
+  "baseline": {
+    "name": "baseline/analysis.ipynb",
+    "sha256": "b0be9ffd00bc783ec83de8e5c2c9179471fa6686653f657f25edc07a904b5fe6",
+    "nbformat": "4.5",
+    "cells": 4,
+    "code_cells": 3,
+    "kernel": "sci-py310",
+    "language": "python 3.10.12",
+    "warnings": []
+  },
+  "candidate": {
+    "name": "candidate/analysis.ipynb",
+    "sha256": "57e15c572807498569e7eb9fc6da350fdbcadf1cfa152038110357129e18bbb3",
+    "nbformat": "4.5",
+    "cells": 4,
+    "code_cells": 3,
+    "kernel": "python3",
+    "language": "python 3.12.4",
+    "warnings": []
+  },
+  "config": {
+    "source": ".notedelta.yml",
+    "metrics": [],
+    "discovery_enabled": true
+  },
+  "summary": {
+    "cells_baseline": 4,
+    "cells_candidate": 4,
+    "cells_added": 0,
+    "cells_deleted": 0,
+    "cells_modified": 1,
+    "cells_moved": 0,
+    "cells_reexecuted_only": 0,
+    "ambiguous_matches": 0,
+    "outputs_changed": 1,
+    "new_errors": 0,
+    "resolved_errors": 0,
+    "numbers_compared": 2,
+    "numerical_changes": 0,
+    "numerical_within_tolerance": 1,
+    "numbers_ignored": 0,
+    "metrics_total": 0,
+    "regressions": 0,
+    "improvements": 0,
+    "metrics_changed": 0,
+    "metrics_within_tolerance": 0,
+    "metrics_unchanged": 0,
+    "missing": 0,
+    "incomparable": 0,
+    "reproducibility_warnings": 9,
+    "environment_facts": 9
+  },
+  "metrics": [],
+  "numeric_changes": [
+    {
+      "id": "N1",
+      "kind": "scalar",
+      "origin": "discovered",
+      "label": "effect mean",
+      "representation": "text",
+      "location": {
+        "baseline_cell_index": 3,
+        "candidate_cell_index": 3,
+        "cell_id": "c-boot",
+        "baseline_output_index": 0,
+        "candidate_output_index": 0,
+        "baseline_line": 0,
+        "candidate_line": 0,
+        "path": null
+      },
+      "status": "within_tolerance",
+      "rule": "R-TOLERANCE",
+      "explanation": "effect mean increased by 1.1e-16 (+2.63e-14%) (0.41823719283746513 → 0.41823719283746524), within the discovery tolerance (absolute 1e-12 or relative 1e-07% of |baseline|; allowed change 4.18237192837e-10).",
+      "scalar": {
+        "baseline": 0.41823719283746513,
+        "candidate": 0.41823719283746524,
+        "baseline_text": "0.41823719283746513",
+        "candidate_text": "0.41823719283746524",
+        "difference": 1.1e-16,
+        "difference_text": "+1.1e-16",
+        "relative_change": 2.630086512720739e-16,
+        "percent_change": 2.630086512720739e-14,
+        "symmetric_relative_difference": 2.630086512720739e-16,
+        "allowed_difference": 4.1823719283746513e-10,
+        "tolerance_ratio": 2.630086512720739e-7,
+        "within_tolerance": true,
+        "possibly_rounding": false,
+        "notes": []
+      },
+      "array": null,
+      "table": null,
+      "notes": []
+    }
+  ],
+  "cells": [
+    {
+      "status": "modified",
+      "changes": [
+        "outputs"
+      ],
+      "moved": false,
+      "match": {
+        "method": "id",
+        "similarity": 1.0,
+        "ambiguous": false,
+        "note": null
+      },
+      "baseline_index": 3,
+      "candidate_index": 3,
+      "cell_id": "c-boot",
+      "cell_type": "code",
+      "baseline_cell_type": null,
+      "title": "est = bootstrap(data, rng=rng, n=5000)",
+      "source_diff": [],
+      "source_diff_truncated": false,
+      "baseline_execution_count": 3,
+      "candidate_execution_count": 3,
+      "outputs": [
+        {
+          "change": "changed",
+          "output_type": "stream",
+          "label": "stdout",
+          "baseline_output_index": 0,
+          "candidate_output_index": 0,
+          "summary": "stdout text changed",
+          "mime_changes": [],
+          "diff": [
+            "@@ -1,3 +1,3 @@",
+            "-effect mean = 0.41823719283746513",
+            "+effect mean = 0.41823719283746524",
+            " effect std = 0.052",
+            " "
+          ],
+          "diff_truncated": false,
+          "new_error": false,
+          "resolved_error": false,
+          "images": []
+        }
+      ],
+      "metadata_changes": []
+    }
+  ],
+  "notebook_metadata_changes": [],
+  "environment": [
+    {
+      "code": "ENV-KERNEL",
+      "level": "fact",
+      "category": "kernel",
+      "message": "Kernel name differs between the compared notebooks.",
+      "baseline": "sci-py310",
+      "candidate": "python3",
+      "evidence": "notebook metadata kernelspec.name"
+    },
+    {
+      "code": "ENV-KERNEL",
+      "level": "fact",
+      "category": "kernel",
+      "message": "Kernel display name differs between the compared notebooks.",
+      "baseline": "Python 3.10 (sci)",
+      "candidate": "Python 3 (ipykernel)",
+      "evidence": "notebook metadata kernelspec.display_name"
+    },
+    {
+      "code": "ENV-PYTHON-VERSION",
+      "level": "fact",
+      "category": "python",
+      "message": "The recorded language version differs (minor version).",
+      "baseline": "3.10.12",
+      "candidate": "3.12.4",
+      "evidence": "notebook metadata language_info.version (recorded by the kernel when last executed)"
+    },
+    {
+      "code": "ENV-INTERPRETER",
+      "level": "fact",
+      "category": "python",
+      "message": "VS Code recorded different Python interpreters for the two notebooks.",
+      "baseline": "a1a1a1a1a1a1",
+      "candidate": "b2b2b2b2b2b2",
+      "evidence": "notebook metadata vscode.interpreter.hash"
+    },
+    {
+      "code": "ENV-LOCK-VERSION",
+      "level": "fact",
+      "category": "dependencies",
+      "message": "Locked version of numpy changed.",
+      "baseline": "1.26.4",
+      "candidate": "2.1.0",
+      "evidence": "uv.lock"
+    },
+    {
+      "code": "ENV-LOCK-VERSION",
+      "level": "fact",
+      "category": "dependencies",
+      "message": "Locked version of pandas changed.",
+      "baseline": "2.1.4",
+      "candidate": "2.2.3",
+      "evidence": "uv.lock"
+    },
+    {
+      "code": "ENV-LOCK-VERSION",
+      "level": "fact",
+      "category": "dependencies",
+      "message": "Locked version of scipy changed.",
+      "baseline": "1.11.4",
+      "candidate": "1.14.1",
+      "evidence": "uv.lock"
+    },
+    {
+      "code": "ENV-DECLARED",
+      "level": "fact",
+      "category": "dependencies",
+      "message": "Declared version constraint for numpy changed.",
+      "baseline": "==1.26.4",
+      "candidate": "==2.1.0",
+      "evidence": "requirements.txt"
+    },
+    {
+      "code": "ENV-DECLARED",
+      "level": "fact",
+      "category": "dependencies",
+      "message": "Declared version constraint for scipy changed.",
+      "baseline": "==1.11.4",
+      "candidate": "==1.14.1",
+      "evidence": "requirements.txt"
+    }
+  ],
+  "policy": {
+    "fail_on": [],
+    "failed": false,
+    "reasons": []
+  },
+  "notices": [],
+  "disclaimer": "NoteDelta reports observable differences between two notebooks and applies the rules you configured. It does not determine whether an experiment is scientifically valid or reproducible; interpretation remains the researcher's responsibility."
+}

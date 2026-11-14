@@ -1,0 +1,1751 @@
+{
+  "$defs": {
+    "ArrayComparison": {
+      "additionalProperties": false,
+      "properties": {
+        "baseline_shape": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Baseline Shape",
+          "type": "array"
+        },
+        "candidate_shape": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Candidate Shape",
+          "type": "array"
+        },
+        "comparable": {
+          "title": "Comparable",
+          "type": "boolean"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reason"
+        },
+        "size": {
+          "default": 0,
+          "title": "Size",
+          "type": "integer"
+        },
+        "changed_elements": {
+          "default": 0,
+          "title": "Changed Elements",
+          "type": "integer"
+        },
+        "exceeding_elements": {
+          "default": 0,
+          "title": "Exceeding Elements",
+          "type": "integer"
+        },
+        "nan_mismatches": {
+          "default": 0,
+          "title": "Nan Mismatches",
+          "type": "integer"
+        },
+        "inf_mismatches": {
+          "default": 0,
+          "title": "Inf Mismatches",
+          "type": "integer"
+        },
+        "max_abs_difference": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Abs Difference"
+        },
+        "max_abs_difference_index": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "integer"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Abs Difference Index"
+        },
+        "baseline_at_max": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "enum": [
+                "nan",
+                "inf",
+                "-inf"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Baseline At Max"
+        },
+        "candidate_at_max": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "enum": [
+                "nan",
+                "inf",
+                "-inf"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Candidate At Max"
+        },
+        "mean_abs_difference": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Mean Abs Difference"
+        },
+        "rms_difference": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rms Difference"
+        },
+        "relative_l2_error": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "||candidate - baseline||2 / ||baseline||2.",
+          "title": "Relative L2 Error"
+        }
+      },
+      "required": [
+        "baseline_shape",
+        "candidate_shape",
+        "comparable"
+      ],
+      "title": "ArrayComparison",
+      "type": "object"
+    },
+    "CellChange": {
+      "additionalProperties": false,
+      "properties": {
+        "status": {
+          "enum": [
+            "unchanged",
+            "modified",
+            "added",
+            "deleted"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "changes": {
+          "items": {
+            "enum": [
+              "source",
+              "outputs",
+              "execution_count",
+              "metadata",
+              "cell_type"
+            ],
+            "type": "string"
+          },
+          "title": "Changes",
+          "type": "array"
+        },
+        "moved": {
+          "default": false,
+          "title": "Moved",
+          "type": "boolean"
+        },
+        "match": {
+          "$ref": "#/$defs/MatchInfo"
+        },
+        "baseline_index": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Baseline Index"
+        },
+        "candidate_index": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Candidate Index"
+        },
+        "cell_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cell Id"
+        },
+        "cell_type": {
+          "title": "Cell Type",
+          "type": "string"
+        },
+        "baseline_cell_type": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Baseline Cell Type"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "source_diff": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Diff",
+          "type": "array"
+        },
+        "source_diff_truncated": {
+          "default": false,
+          "title": "Source Diff Truncated",
+          "type": "boolean"
+        },
+        "baseline_execution_count": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Baseline Execution Count"
+        },
+        "candidate_execution_count": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Candidate Execution Count"
+        },
+        "outputs": {
+          "items": {
+            "$ref": "#/$defs/OutputChange"
+          },
+          "title": "Outputs",
+          "type": "array"
+        },
+        "metadata_changes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Metadata Changes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "status",
+        "match",
+        "cell_type",
+        "title"
+      ],
+      "title": "CellChange",
+      "type": "object"
+    },
+    "ConfigInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "source": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Config file name, or null when none was used.",
+          "title": "Source"
+        },
+        "metrics": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Metrics",
+          "type": "array"
+        },
+        "discovery_enabled": {
+          "default": true,
+          "title": "Discovery Enabled",
+          "type": "boolean"
+        }
+      },
+      "title": "ConfigInfo",
+      "type": "object"
+    },
+    "EnvFinding": {
+      "additionalProperties": false,
+      "properties": {
+        "code": {
+          "title": "Code",
+          "type": "string"
+        },
+        "level": {
+          "$ref": "#/$defs/Level"
+        },
+        "category": {
+          "enum": [
+            "kernel",
+            "python",
+            "dependencies",
+            "seeds",
+            "execution",
+            "metadata",
+            "general"
+          ],
+          "title": "Category",
+          "type": "string"
+        },
+        "message": {
+          "title": "Message",
+          "type": "string"
+        },
+        "baseline": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Baseline"
+        },
+        "candidate": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Candidate"
+        },
+        "evidence": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Evidence"
+        }
+      },
+      "required": [
+        "code",
+        "level",
+        "category",
+        "message"
+      ],
+      "title": "EnvFinding",
+      "type": "object"
+    },
+    "ImagePair": {
+      "additionalProperties": false,
+      "properties": {
+        "mime": {
+          "title": "Mime",
+          "type": "string"
+        },
+        "baseline_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Baseline Sha256"
+        },
+        "candidate_sha256": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Candidate Sha256"
+        },
+        "baseline_data": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Base64 data, only with --embed-images.",
+          "title": "Baseline Data"
+        },
+        "candidate_data": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Candidate Data"
+        }
+      },
+      "required": [
+        "mime"
+      ],
+      "title": "ImagePair",
+      "type": "object"
+    },
+    "Level": {
+      "enum": [
+        "fact",
+        "warning",
+        "hypothesis"
+      ],
+      "title": "Level",
+      "type": "string"
+    },
+    "Location": {
+      "additionalProperties": false,
+      "properties": {
+        "baseline_cell_index": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Baseline Cell Index"
+        },
+        "candidate_cell_index": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Candidate Cell Index"
+        },
+        "cell_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cell Id"
+        },
+        "baseline_output_index": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Baseline Output Index"
+        },
+        "candidate_output_index": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Candidate Output Index"
+        },
+        "baseline_line": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Baseline Line"
+        },
+        "candidate_line": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Candidate Line"
+        },
+        "path": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "Path inside a structured value, e.g. metrics.acc or [2].",
+          "title": "Path"
+        }
+      },
+      "title": "Location",
+      "type": "object"
+    },
+    "MatchInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "method": {
+          "enum": [
+            "id",
+            "identical",
+            "similar",
+            "position",
+            "none"
+          ],
+          "title": "Method",
+          "type": "string"
+        },
+        "similarity": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Similarity"
+        },
+        "ambiguous": {
+          "default": false,
+          "title": "Ambiguous",
+          "type": "boolean"
+        },
+        "note": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Note"
+        }
+      },
+      "required": [
+        "method"
+      ],
+      "title": "MatchInfo",
+      "type": "object"
+    },
+    "MetricResult": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "direction": {
+          "enum": [
+            "minimize",
+            "maximize",
+            "none"
+          ],
+          "title": "Direction",
+          "type": "string"
+        },
+        "unit": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Unit"
+        },
+        "tolerance": {
+          "$ref": "#/$defs/ToleranceInfo"
+        },
+        "baseline": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MetricValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "candidate": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/MetricValue"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "comparison": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ScalarComparison"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "rule": {
+          "title": "Rule",
+          "type": "string"
+        },
+        "explanation": {
+          "title": "Explanation",
+          "type": "string"
+        },
+        "notes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Notes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "label",
+        "direction",
+        "tolerance",
+        "status",
+        "rule",
+        "explanation"
+      ],
+      "title": "MetricResult",
+      "type": "object"
+    },
+    "MetricValue": {
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "enum": [
+                "nan",
+                "inf",
+                "-inf"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        },
+        "cell_index": {
+          "title": "Cell Index",
+          "type": "integer"
+        },
+        "cell_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Cell Id"
+        },
+        "output_index": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Output Index"
+        },
+        "line": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Line"
+        },
+        "excerpt": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Excerpt"
+        },
+        "matches_found": {
+          "default": 1,
+          "title": "Matches Found",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "value",
+        "text",
+        "cell_index"
+      ],
+      "title": "MetricValue",
+      "type": "object"
+    },
+    "NotebookInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "description": "File name only; absolute paths are never recorded.",
+          "title": "Name",
+          "type": "string"
+        },
+        "sha256": {
+          "title": "Sha256",
+          "type": "string"
+        },
+        "nbformat": {
+          "title": "Nbformat",
+          "type": "string"
+        },
+        "cells": {
+          "title": "Cells",
+          "type": "integer"
+        },
+        "code_cells": {
+          "title": "Code Cells",
+          "type": "integer"
+        },
+        "kernel": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Kernel"
+        },
+        "language": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Language"
+        },
+        "warnings": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Warnings",
+          "type": "array"
+        }
+      },
+      "required": [
+        "name",
+        "sha256",
+        "nbformat",
+        "cells",
+        "code_cells"
+      ],
+      "title": "NotebookInfo",
+      "type": "object"
+    },
+    "NumericFinding": {
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "scalar",
+            "array",
+            "table"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "origin": {
+          "const": "discovered",
+          "default": "discovered",
+          "title": "Origin",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "representation": {
+          "enum": [
+            "text",
+            "json",
+            "literal",
+            "table"
+          ],
+          "title": "Representation",
+          "type": "string"
+        },
+        "location": {
+          "$ref": "#/$defs/Location"
+        },
+        "status": {
+          "$ref": "#/$defs/Status"
+        },
+        "rule": {
+          "title": "Rule",
+          "type": "string"
+        },
+        "explanation": {
+          "title": "Explanation",
+          "type": "string"
+        },
+        "scalar": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ScalarComparison"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "array": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ArrayComparison"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "table": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/TableComparison"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "notes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Notes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "label",
+        "representation",
+        "location",
+        "status",
+        "rule",
+        "explanation"
+      ],
+      "title": "NumericFinding",
+      "type": "object"
+    },
+    "OutputChange": {
+      "additionalProperties": false,
+      "properties": {
+        "change": {
+          "enum": [
+            "added",
+            "removed",
+            "changed"
+          ],
+          "title": "Change",
+          "type": "string"
+        },
+        "output_type": {
+          "title": "Output Type",
+          "type": "string"
+        },
+        "label": {
+          "title": "Label",
+          "type": "string"
+        },
+        "baseline_output_index": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Baseline Output Index"
+        },
+        "candidate_output_index": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Candidate Output Index"
+        },
+        "summary": {
+          "title": "Summary",
+          "type": "string"
+        },
+        "mime_changes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Mime Changes",
+          "type": "array"
+        },
+        "diff": {
+          "description": "Unified diff lines of the text representation.",
+          "items": {
+            "type": "string"
+          },
+          "title": "Diff",
+          "type": "array"
+        },
+        "diff_truncated": {
+          "default": false,
+          "title": "Diff Truncated",
+          "type": "boolean"
+        },
+        "new_error": {
+          "default": false,
+          "title": "New Error",
+          "type": "boolean"
+        },
+        "resolved_error": {
+          "default": false,
+          "title": "Resolved Error",
+          "type": "boolean"
+        },
+        "images": {
+          "items": {
+            "$ref": "#/$defs/ImagePair"
+          },
+          "title": "Images",
+          "type": "array"
+        }
+      },
+      "required": [
+        "change",
+        "output_type",
+        "label",
+        "summary"
+      ],
+      "title": "OutputChange",
+      "type": "object"
+    },
+    "PolicyResult": {
+      "additionalProperties": false,
+      "properties": {
+        "fail_on": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Fail On",
+          "type": "array"
+        },
+        "failed": {
+          "default": false,
+          "title": "Failed",
+          "type": "boolean"
+        },
+        "reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Reasons",
+          "type": "array"
+        }
+      },
+      "title": "PolicyResult",
+      "type": "object"
+    },
+    "ScalarComparison": {
+      "additionalProperties": false,
+      "properties": {
+        "baseline": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "enum": [
+                "nan",
+                "inf",
+                "-inf"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Baseline"
+        },
+        "candidate": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "enum": [
+                "nan",
+                "inf",
+                "-inf"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Candidate"
+        },
+        "baseline_text": {
+          "title": "Baseline Text",
+          "type": "string"
+        },
+        "candidate_text": {
+          "title": "Candidate Text",
+          "type": "string"
+        },
+        "difference": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "candidate - baseline (exact decimal arithmetic on printed values).",
+          "title": "Difference"
+        },
+        "difference_text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Difference Text"
+        },
+        "relative_change": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "difference / |baseline|; null when undefined.",
+          "title": "Relative Change"
+        },
+        "percent_change": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Percent Change"
+        },
+        "symmetric_relative_difference": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "|difference| / mean(|baseline|, |candidate|).",
+          "title": "Symmetric Relative Difference"
+        },
+        "allowed_difference": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "max(absolute, relative * |baseline|).",
+          "title": "Allowed Difference"
+        },
+        "tolerance_ratio": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "description": "|difference| / allowed_difference.",
+          "title": "Tolerance Ratio"
+        },
+        "within_tolerance": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Within Tolerance"
+        },
+        "possibly_rounding": {
+          "default": false,
+          "title": "Possibly Rounding",
+          "type": "boolean"
+        },
+        "notes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Notes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "baseline",
+        "candidate",
+        "baseline_text",
+        "candidate_text"
+      ],
+      "title": "ScalarComparison",
+      "type": "object"
+    },
+    "Status": {
+      "enum": [
+        "unchanged",
+        "within_tolerance",
+        "changed",
+        "improvement",
+        "regression",
+        "output_missing",
+        "incomparable"
+      ],
+      "title": "Status",
+      "type": "string"
+    },
+    "Summary": {
+      "additionalProperties": false,
+      "properties": {
+        "cells_baseline": {
+          "title": "Cells Baseline",
+          "type": "integer"
+        },
+        "cells_candidate": {
+          "title": "Cells Candidate",
+          "type": "integer"
+        },
+        "cells_added": {
+          "default": 0,
+          "title": "Cells Added",
+          "type": "integer"
+        },
+        "cells_deleted": {
+          "default": 0,
+          "title": "Cells Deleted",
+          "type": "integer"
+        },
+        "cells_modified": {
+          "default": 0,
+          "title": "Cells Modified",
+          "type": "integer"
+        },
+        "cells_moved": {
+          "default": 0,
+          "title": "Cells Moved",
+          "type": "integer"
+        },
+        "cells_reexecuted_only": {
+          "default": 0,
+          "title": "Cells Reexecuted Only",
+          "type": "integer"
+        },
+        "ambiguous_matches": {
+          "default": 0,
+          "title": "Ambiguous Matches",
+          "type": "integer"
+        },
+        "outputs_changed": {
+          "default": 0,
+          "title": "Outputs Changed",
+          "type": "integer"
+        },
+        "new_errors": {
+          "default": 0,
+          "title": "New Errors",
+          "type": "integer"
+        },
+        "resolved_errors": {
+          "default": 0,
+          "title": "Resolved Errors",
+          "type": "integer"
+        },
+        "numbers_compared": {
+          "default": 0,
+          "title": "Numbers Compared",
+          "type": "integer"
+        },
+        "numerical_changes": {
+          "default": 0,
+          "description": "Discovered numbers that changed beyond the discovery tolerance.",
+          "title": "Numerical Changes",
+          "type": "integer"
+        },
+        "numerical_within_tolerance": {
+          "default": 0,
+          "title": "Numerical Within Tolerance",
+          "type": "integer"
+        },
+        "numbers_ignored": {
+          "default": 0,
+          "title": "Numbers Ignored",
+          "type": "integer"
+        },
+        "metrics_total": {
+          "default": 0,
+          "title": "Metrics Total",
+          "type": "integer"
+        },
+        "regressions": {
+          "default": 0,
+          "title": "Regressions",
+          "type": "integer"
+        },
+        "improvements": {
+          "default": 0,
+          "title": "Improvements",
+          "type": "integer"
+        },
+        "metrics_changed": {
+          "default": 0,
+          "title": "Metrics Changed",
+          "type": "integer"
+        },
+        "metrics_within_tolerance": {
+          "default": 0,
+          "title": "Metrics Within Tolerance",
+          "type": "integer"
+        },
+        "metrics_unchanged": {
+          "default": 0,
+          "title": "Metrics Unchanged",
+          "type": "integer"
+        },
+        "missing": {
+          "default": 0,
+          "title": "Missing",
+          "type": "integer"
+        },
+        "incomparable": {
+          "default": 0,
+          "title": "Incomparable",
+          "type": "integer"
+        },
+        "reproducibility_warnings": {
+          "default": 0,
+          "title": "Reproducibility Warnings",
+          "type": "integer"
+        },
+        "environment_facts": {
+          "default": 0,
+          "title": "Environment Facts",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "cells_baseline",
+        "cells_candidate"
+      ],
+      "title": "Summary",
+      "type": "object"
+    },
+    "TableCellChange": {
+      "additionalProperties": false,
+      "properties": {
+        "row": {
+          "title": "Row",
+          "type": "string"
+        },
+        "column": {
+          "title": "Column",
+          "type": "string"
+        },
+        "baseline": {
+          "title": "Baseline",
+          "type": "string"
+        },
+        "candidate": {
+          "title": "Candidate",
+          "type": "string"
+        },
+        "difference": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Difference"
+        },
+        "exceeds_tolerance": {
+          "title": "Exceeds Tolerance",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "row",
+        "column",
+        "baseline",
+        "candidate",
+        "exceeds_tolerance"
+      ],
+      "title": "TableCellChange",
+      "type": "object"
+    },
+    "TableComparison": {
+      "additionalProperties": false,
+      "properties": {
+        "baseline_shape": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Baseline Shape",
+          "type": "array"
+        },
+        "candidate_shape": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Candidate Shape",
+          "type": "array"
+        },
+        "comparable": {
+          "title": "Comparable",
+          "type": "boolean"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Reason"
+        },
+        "compared_cells": {
+          "default": 0,
+          "title": "Compared Cells",
+          "type": "integer"
+        },
+        "changed_cells": {
+          "default": 0,
+          "title": "Changed Cells",
+          "type": "integer"
+        },
+        "exceeding_cells": {
+          "default": 0,
+          "title": "Exceeding Cells",
+          "type": "integer"
+        },
+        "text_changed_cells": {
+          "default": 0,
+          "title": "Text Changed Cells",
+          "type": "integer"
+        },
+        "rows_only_in_baseline": {
+          "default": 0,
+          "title": "Rows Only In Baseline",
+          "type": "integer"
+        },
+        "rows_only_in_candidate": {
+          "default": 0,
+          "title": "Rows Only In Candidate",
+          "type": "integer"
+        },
+        "columns_only_in_baseline": {
+          "default": 0,
+          "title": "Columns Only In Baseline",
+          "type": "integer"
+        },
+        "columns_only_in_candidate": {
+          "default": 0,
+          "title": "Columns Only In Candidate",
+          "type": "integer"
+        },
+        "max_abs_difference": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max Abs Difference"
+        },
+        "max_at": {
+          "anyOf": [
+            {
+              "items": {
+                "type": "string"
+              },
+              "type": "array"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Max At"
+        },
+        "top_changes": {
+          "items": {
+            "$ref": "#/$defs/TableCellChange"
+          },
+          "title": "Top Changes",
+          "type": "array"
+        },
+        "truncated": {
+          "default": false,
+          "title": "Truncated",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "baseline_shape",
+        "candidate_shape",
+        "comparable"
+      ],
+      "title": "TableComparison",
+      "type": "object"
+    },
+    "ToleranceInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "absolute": {
+          "default": 0.0,
+          "title": "Absolute",
+          "type": "number"
+        },
+        "relative": {
+          "default": 0.0,
+          "title": "Relative",
+          "type": "number"
+        }
+      },
+      "title": "ToleranceInfo",
+      "type": "object"
+    },
+    "ToolInfo": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "default": "notedelta",
+          "title": "Name",
+          "type": "string"
+        },
+        "version": {
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "version"
+      ],
+      "title": "ToolInfo",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "default": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "tool": {
+      "$ref": "#/$defs/ToolInfo"
+    },
+    "generated_at": {
+      "title": "Generated At",
+      "type": "string"
+    },
+    "baseline": {
+      "$ref": "#/$defs/NotebookInfo"
+    },
+    "candidate": {
+      "$ref": "#/$defs/NotebookInfo"
+    },
+    "config": {
+      "$ref": "#/$defs/ConfigInfo"
+    },
+    "summary": {
+      "$ref": "#/$defs/Summary"
+    },
+    "metrics": {
+      "items": {
+        "$ref": "#/$defs/MetricResult"
+      },
+      "title": "Metrics",
+      "type": "array"
+    },
+    "numeric_changes": {
+      "items": {
+        "$ref": "#/$defs/NumericFinding"
+      },
+      "title": "Numeric Changes",
+      "type": "array"
+    },
+    "cells": {
+      "items": {
+        "$ref": "#/$defs/CellChange"
+      },
+      "title": "Cells",
+      "type": "array"
+    },
+    "notebook_metadata_changes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Notebook Metadata Changes",
+      "type": "array"
+    },
+    "environment": {
+      "items": {
+        "$ref": "#/$defs/EnvFinding"
+      },
+      "title": "Environment",
+      "type": "array"
+    },
+    "policy": {
+      "$ref": "#/$defs/PolicyResult"
+    },
+    "notices": {
+      "description": "Limits reached, matching notes, input warnings.",
+      "items": {
+        "type": "string"
+      },
+      "title": "Notices",
+      "type": "array"
+    },
+    "disclaimer": {
+      "default": "NoteDelta reports observable differences between two notebooks and applies the rules you configured. It does not determine whether an experiment is scientifically valid or reproducible; interpretation remains the researcher's responsibility.",
+      "title": "Disclaimer",
+      "type": "string"
+    }
+  },
+  "required": [
+    "tool",
+    "generated_at",
+    "baseline",
+    "candidate",
+    "config",
+    "summary"
+  ],
+  "title": "Report",
+  "type": "object",
+  "$id": "https://notedelta.dev/schema/report-v1.json"
+}

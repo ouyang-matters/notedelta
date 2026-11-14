@@ -1,0 +1,136 @@
+name: NoteDelta notebook check
+description: Compare Jupyter notebooks with a baseline revision; report numerical changes and fail on configured scientific regressions.
+author: Ouyang Matters
+branding:
+  icon: activity
+  color: blue
+
+inputs:
+  notebooks:
+    description: >
+      Notebooks to check: one path or glob per line (globs such as notebooks/**/*.ipynb are expanded by
+      NoteDelta), or a single line of space-separated paths.
+    required: true
+  baseline-ref:
+    description: Git revision to compare against. Default - the pull request's base commit, otherwise HEAD~1.
+    required: false
+    default: ""
+  config:
+    description: Path to .notedelta.yml. Default - searched upwards from each notebook.
+    required: false
+    default: ""
+  fail-on:
+    description: >
+      Comma-separated conditions that fail the check, in addition to the config's policy.fail_on:
+      regression, output_missing, incomparable, changed, new_error, reproducibility_warning, structural.
+    required: false
+    default: regression
+  python-version:
+    description: Python version used to run NoteDelta (3.11 or newer).
+    required: false
+    default: "3.12"
+  notedelta-package:
+    description: pip requirement for NoteDelta, e.g. notedelta==0.1.0 or a path/URL to a wheel.
+    required: false
+    default: notedelta
+  report-dir:
+    description: Folder for the HTML and JSON reports.
+    required: false
+    default: notedelta-reports
+  upload-artifact:
+    description: Upload the reports as a workflow artifact and link them from the job summary.
+    required: false
+    default: "true"
+  artifact-name:
+    description: Name of the uploaded artifact.
+    required: false
+    default: notedelta-reports
+
+outputs:
+  exit-code:
+    description: NoteDelta exit code (0 ok, 1 fail-on condition met, 2 invalid input, 3 error).
+    value: ${{ steps.compare.outputs.exit-code }}
+  report-dir:
+    description: Folder containing the reports.
+    value: ${{ inputs.report-dir }}
+
+runs:
+  using: composite
+  steps:
+    - name: Set up Python for NoteDelta
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ inputs.python-version }}
+
+    - name: Install NoteDelta
+      shell: bash
+      env:
+        NOTEDELTA_PACKAGE: ${{ inputs.notedelta-package }}
+      run: python -m pip install --disable-pip-version-check --quiet "$NOTEDELTA_PACKAGE"
+
+    - name: Compare notebooks
+      id: compare
+      shell: bash
+      # Inputs are passed through environment variables, never interpolated into the script.
+      env:
+        INPUT_NOTEBOOKS: ${{ inputs.notebooks }}
+        INPUT_BASELINE_REF: ${{ inputs.baseline-ref }}
+        INPUT_CONFIG: ${{ inputs.config }}
+        INPUT_FAIL_ON: ${{ inputs.fail-on }}
+        INPUT_REPORT_DIR: ${{ inputs.report-dir }}
+        PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+      run: |
+        set -u
+        ref="$INPUT_BASELINE_REF"
+        if [ -z "$ref" ]; then
+          if [ -n "${PR_BASE_SHA:-}" ]; then ref="$PR_BASE_SHA"; else ref="HEAD~1"; fi
+        fi
+        args=(compare-git "--ref=$ref" --report-dir "$INPUT_REPORT_DIR" --color never)
+        if [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then args+=(--summary "$GITHUB_STEP_SUMMARY"); fi
+        if [ -n "$INPUT_CONFIG" ]; then args+=("--config=$INPUT_CONFIG"); fi
+        if [ -n "$INPUT_FAIL_ON" ]; then args+=("--fail-on=$INPUT_FAIL_ON"); fi
+        args+=(--)
+        if [[ "$INPUT_NOTEBOOKS" == *$'\n'* ]]; then
+          while IFS= read -r line; do
+            line="${line%$'\r'}"
+            [ -n "${line//[[:space:]]/}" ] && args+=("$line")
+          done <<< "$INPUT_NOTEBOOKS"
+        else
+          set -f  # globs are expanded by NoteDelta (supports **), not by the shell
+          for nb in $INPUT_NOTEBOOKS; do args+=("$nb"); done
+          set +f
+        fi
+        echo "notedelta ${args[*]}"
+        set +e
+        notedelta "${args[@]}"
+        code=$?
+        set -e
+        echo "exit-code=$code" >> "$GITHUB_OUTPUT"
+        exit 0
+
+    - name: Upload NoteDelta reports
+      id: upload
+      if: always() && inputs.upload-artifact == 'true'
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ inputs.artifact-name }}
+        path: ${{ inputs.report-dir }}
+        if-no-files-found: ignore
+        retention-days: 14
+
+    - name: Report result
+      if: always()
+      shell: bash
+      env:
+        CODE: ${{ steps.compare.outputs.exit-code }}
+        ARTIFACT_URL: ${{ steps.upload.outputs.artifact-url }}
+      run: |
+        if [ -n "${ARTIFACT_URL:-}" ] && [ -n "${GITHUB_STEP_SUMMARY:-}" ]; then
+          printf '\n[Download the NoteDelta HTML/JSON reports](%s)\n' "$ARTIFACT_URL" >> "$GITHUB_STEP_SUMMARY"
+        fi
+        case "${CODE:-3}" in
+          0) echo "NoteDelta: no fail-on condition met." ;;
+          1) echo "::error title=NoteDelta::A configured fail-on condition was met (see the job summary)."; exit 1 ;;
+          2) echo "::error title=NoteDelta::Invalid input or configuration (see the log above)."; exit 2 ;;
+          *) echo "::error title=NoteDelta::NoteDelta did not complete (see the log above)."; exit 3 ;;
+        esac

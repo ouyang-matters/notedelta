@@ -1,0 +1,33 @@
+version: 1
+metrics:
+  - name: reconstruction_error
+    label: Relative reconstruction error
+    direction: minimize
+    extraction:
+      type: regex
+      pattern: 'Relative reconstruction error\s*=\s*([0-9.eE+-]+)'
+    tolerance:
+      absolute: 0.0001
+      relative: 0.02
+  - name: energy
+    label: Total energy
+    direction: none
+    extraction:
+      type: json_path
+      path: energy
+    tolerance:
+      relative: 1.0e-5
+  - name: energy_drift
+    label: Energy drift
+    direction: minimize
+    extraction:
+      type: key_value
+      key: Energy drift
+    tolerance:
+      relative: 0.05
+discovery:
+  tolerance:
+    absolute: 1.0e-12
+    relative: 1.0e-9
+policy:
+  fail_on: [regression]
