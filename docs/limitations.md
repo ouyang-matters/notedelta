@@ -39,9 +39,9 @@ Integrations
 
 - The VS Code extension needs the Python CLI installed separately.
 - The GitHub Action's shell steps are tested against real git repositories (locally and in
-  CI); the composite action has not yet been used from another repository, and it needs
-  the PyPI release to install NoteDelta.
-- Neither the Python package, the VS Code extension nor the action has been published.
+  CI); the composite action has not yet been used from another repository.
+- The Python package is on PyPI (0.1.0, 2026-11-15). The VS Code extension and the
+  GitHub Marketplace listing are not published yet.
 
 Platform
 

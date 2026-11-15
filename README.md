@@ -22,10 +22,18 @@ telemetry and needs no account.
 
 ![NoteDelta HTML report](https://raw.githubusercontent.com/ouyang-matters/notedelta/main/docs/images/report-light.png)
 
-> **Status: beta, not yet released.** Packages for PyPI (`pip install notedelta`), the
-> VS Code Marketplace and the GitHub Marketplace are being prepared. Watch this repository
-> for the first release. This repository hosts the documentation, the issue tracker, the
-> licence and the GitHub Action. The source code is not public.
+> **Status: beta (0.1).** The VS Code extension and the GitHub Marketplace listing are in
+> preparation. This repository hosts the documentation, the issue tracker, the licence and
+> the GitHub Action. The source code is not public.
+
+## Install
+
+NoteDelta needs Python 3.11 or newer and runs on Windows, macOS and Linux.
+
+```bash
+pip install notedelta
+pip install "notedelta[execute]"   # optional: opt-in notebook re-execution (runs code; not sandboxed)
+```
 
 ## Quick look
 
@@ -79,7 +87,7 @@ Exit codes: `0` ok, `1` a fail-on condition was met, `2` invalid input or config
 
 This repository is also a GitHub Action that checks notebooks in pull requests. It writes
 a job summary, uploads the HTML and JSON reports and needs only read permission. It
-installs NoteDelta from PyPI, so it will work after the first PyPI release.
+installs NoteDelta from PyPI.
 
 ```yaml
 permissions:

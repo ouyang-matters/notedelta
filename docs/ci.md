@@ -65,5 +65,4 @@ The action's shell steps are run unchanged by automated tests against temporary 
 repositories on Linux, macOS and Windows. The tests cover recursive globs, paths with
 spaces, implicit and explicit baselines, invalid revisions, exit-code mapping, and the
 summary and report files. The standard `actions/setup-python` and
-`actions/upload-artifact` steps are not part of those tests. The action works once
-NoteDelta is available on PyPI.
+`actions/upload-artifact` steps are not part of those tests.

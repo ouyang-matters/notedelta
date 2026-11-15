@@ -3,7 +3,7 @@
 All notable changes are listed here. Versions follow semantic versioning; the JSON
 report and the configuration carry their own schema versions.
 
-## 0.1.0 - unreleased (first beta)
+## 0.1.0 - 2026-11-15 (first beta)
 
 - Renamed from the working name LabTrace to NoteDelta before the first release (the
   `labtrace` name was taken on PyPI). Package, command, configuration file
